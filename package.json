@@ -9,9 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.4.4",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
     "@next/font": "13.0.7",
+    "@supabase/auth-helpers-nextjs": "^0.5.2",
+    "@supabase/auth-helpers-react": "^0.3.1",
+    "@supabase/auth-ui-react": "^0.2.6",
+    "@supabase/supabase-js": "^2.2.1",
+    "axios": "^1.2.1",
+    "dayjs": "^1.11.7",
+    "framer-motion": "^6",
     "next": "13.0.7",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-icons": "^4.7.1"
   }
 }
