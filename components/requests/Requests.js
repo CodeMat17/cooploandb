@@ -95,7 +95,7 @@ const Requests = ({ session }) => {
   };
 
   return (
-    <Box px='6' py='8' maxW='6xl' mx='auto'>
+    <Box px='2' py='8' maxW='6xl' mx='auto'>
       {role === "coopAdmin" ? (
         <Box>
           <Text
