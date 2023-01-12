@@ -3,8 +3,8 @@ import MenuDrawer from './MenuDrawer';
 
 const NavHeader = ({session}) => {
   return (
-    <Box as='nav' bg='gray.800' color='white'>
-      <HStack align='center' justify='space-between' p='4' maxW='5xl' mx='auto'>
+    <Box as='nav' bg='gray.800' color='white' pos='sticky' top='0' zIndex='60'>
+      <HStack align='center' justify='space-between' p='4' maxW='6xl' mx='auto'>
         <VStack align='flex-start' spacing='0'>
           <HStack align='baseline'>
             <Text fontSize='2xl'>CoopLoan</Text> 

@@ -8,6 +8,8 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  FormControl,
+  FormLabel,
   HStack,
   IconButton,
   Text,
@@ -15,11 +17,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import Link from "next/link";
+import { BsWhatsapp } from "react-icons/bs";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdCall } from "react-icons/md";
 import { RiMailSendFill } from "react-icons/ri";
-import { BsWhatsapp } from "react-icons/bs";
 
 const MenuDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,7 +31,9 @@ const MenuDrawer = () => {
       <IconButton
         onClick={onOpen}
         size='lg'
-        isRound bg='gray.700' color='white'
+        isRound
+        bg='gray.700'
+        color='white'
         icon={<HiMenuAlt3 size={32} />}
       />
 
@@ -40,38 +43,8 @@ const MenuDrawer = () => {
           <DrawerCloseButton />
           <DrawerHeader>CoopLoan Admin</DrawerHeader>
 
-          <DrawerBody py='16'>
-            <Button w='full' mb='8'>
-              Liquidate Loan
-            </Button>
-            <VStack align='start' mb='12'>
-              <Text>Contact Admin</Text>
-              <HStack spacing='6'>
-                {/* <Link href=''> */}
-                <IconButton
-                  onClick={onClose}
-                  icon={<MdCall size={22} />}
-                  isRound
-                  size='lg'
-                />
-                {/* </Link> */}
+          <DrawerBody pt='8' pb='16'>
 
-                {/* <Link href=''> */}
-                <IconButton
-                  onClick={onClose}
-                  icon={<RiMailSendFill size={22} />}
-                  isRound
-                  size='lg'
-                />
-                {/* </Link> */}
-                <IconButton
-                  onClick={onClose}
-                  icon={<BsWhatsapp size={22} />}
-                  isRound
-                  size='lg'
-                />
-              </HStack>
-            </VStack>
           </DrawerBody>
 
           <DrawerFooter justifyContent='start'>

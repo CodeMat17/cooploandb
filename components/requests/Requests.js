@@ -12,6 +12,7 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
 import AllRequestCard from "../requests/AllRequestCard";
 import ApprovedRequestCard from "./ApprovedRequestCard";
+import ConfirmedRequestCard from "./ConfirmedRequestCard";
 import DeclinedRequestCard from "./DeclinedRequestCard";
 
 const Requests = ({ session }) => {
@@ -21,6 +22,7 @@ const Requests = ({ session }) => {
   const [allRequests, setAllRequests] = useState("");
   const [approvedRequests, setApprovedRequests] = useState("");
   const [declinedRequests, setDeclinedRequests] = useState("");
+  const [confirmedRequests, setConfirmedRequests] = useState("");
 
   useEffect(() => {
     getProfile();
@@ -37,6 +39,10 @@ const Requests = ({ session }) => {
   useEffect(() => {
     getDeclinedRequest();
   }, []);
+
+   useEffect(() => {
+     getConfirmedRequest();
+   }, []);
 
   async function getProfile() {
     try {
@@ -76,7 +82,8 @@ const Requests = ({ session }) => {
     let { data, error } = await supabase
       .from("loans")
       .select("*")
-      .eq("status", "active");
+      .eq("status", "active")
+      .order("id", { ascending: false });
 
     if (data) {
       setApprovedRequests(data);
@@ -87,12 +94,25 @@ const Requests = ({ session }) => {
     let { data, error } = await supabase
       .from("loans")
       .select("*")
-      .eq("status", "declined");
+      .eq("status", "declined")
+      .order("id", { ascending: false });
 
     if (data) {
       setDeclinedRequests(data);
     }
   };
+
+   const getConfirmedRequest = async () => {
+     let { data, error } = await supabase
+       .from("loans")
+       .select("*")
+       .eq("status", "repaid")
+       .order("id", { ascending: false });
+
+     if (data) {
+       setConfirmedRequests(data);
+     }
+   };
 
   return (
     <Box px='2' py='8' maxW='6xl' mx='auto'>
@@ -106,10 +126,13 @@ const Requests = ({ session }) => {
           </Text>
           <Box py='6'>
             <Tabs variant='enclosed'>
-              <TabList>
+              <TabList justifyContent='center'>
                 <Tab fontSize='lg'>Requests</Tab>
                 <Tab fontSize='lg'>Approved</Tab>
                 <Tab fontSize='lg'>Declined</Tab>
+                <Tab display={{ base: "none", sm: "flex" }} fontSize='lg'>
+                  Confirmed
+                </Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
@@ -123,7 +146,11 @@ const Requests = ({ session }) => {
                     {allRequests &&
                       allRequests.length >= 1 &&
                       allRequests.map((request) => (
-                        <AllRequestCard session={session} key={request.id} {...request} />
+                        <AllRequestCard
+                          session={session}
+                          key={request.id}
+                          {...request}
+                        />
                       ))}
                   </SimpleGrid>
                 </TabPanel>
@@ -165,7 +192,20 @@ const Requests = ({ session }) => {
                       ))}
                   </SimpleGrid>
                 </TabPanel>
-                
+                <TabPanel display={{ base: "none", sm: "flex" }}>
+                  <SimpleGrid spacing='30px' py='6' columns='1'>
+                    {confirmedRequests && confirmedRequests.length <= 0 && (
+                      <Text textAlign='center'>
+                        No confirmed loan at the moment.
+                      </Text>
+                    )}
+                    {confirmedRequests &&
+                      confirmedRequests.length >= 1 &&
+                      confirmedRequests.map((request) => (
+                        <ConfirmedRequestCard key={request.id} {...request} />
+                      ))}
+                  </SimpleGrid>
+                </TabPanel>
               </TabPanels>
             </Tabs>
           </Box>
